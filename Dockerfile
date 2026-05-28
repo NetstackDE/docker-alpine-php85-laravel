@@ -50,7 +50,6 @@ RUN ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php
 
 # Install Frankenphp binary
 RUN curl https://frankenphp.dev/install.sh | sh
-RUN mv frankenphp /usr/local/bin/
 
 # Remove default server definition from Nginx to avoid conflicts
 RUN rm /etc/nginx/http.d/default.conf
