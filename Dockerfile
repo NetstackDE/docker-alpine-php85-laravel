@@ -6,8 +6,7 @@ LABEL maintainer="Netstack GmbH <info@netstack.de>"
 ENV PHP_VERSION=85
 
 RUN echo "https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/main/php-zts" | tee -a /etc/apk/repositories
-RUN KEYFILE=$(curl -sJOw '%{filename_effective}' https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/key)
-RUN mv ${KEYFILE} /etc/apk/keys/
+RUN KEYFILE=$(curl -sJOw '%{filename_effective}' https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/key) && mv ${KEYFILE} /etc/apk/keys/
 RUN apk update
 
 # Install dependencies and PHP 8.2 with Nginx and Docker for docker in docker builds 
