@@ -19,42 +19,40 @@ RUN apk add --no-cache \
     curl \
     git \
     frankenphp \
-    php${PHP_VERSION} \
-    php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-fileinfo \
-    php${PHP_VERSION}-mysqli \
-    php${PHP_VERSION}-json \
-    php${PHP_VERSION}-ctype \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-dom \
-    php${PHP_VERSION}-mbstring \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-intl \
-    php${PHP_VERSION}-xmlwriter \
-    php${PHP_VERSION}-xmlreader \
-    php${PHP_VERSION}-simplexml \
-    php${PHP_VERSION}-tokenizer \
-    php${PHP_VERSION}-pcntl \
-    php${PHP_VERSION}-pdo \
-    php${PHP_VERSION}-pdo_mysql \
-    php${PHP_VERSION}-pdo_sqlite \
-    php${PHP_VERSION}-phar \
-    php${PHP_VERSION}-zip \
-    php${PHP_VERSION}-openssl \
-    php${PHP_VERSION}-gd \
-    php${PHP_VERSION}-iconv \
-    php${PHP_VERSION}-session \
-    php${PHP_VERSION}-zlib \
-    php${PHP_VERSION}-exif \
-    php${PHP_VERSION}-ftp \
-    php${PHP_VERSION}-bcmath \
-    php${PHP_VERSION}-sockets \
+    php-zts-fpm \
+    php-zts-fileinfo \
+    php-zts-mysqli \
+    php-zts-ctype \
+    php-zts-curl \
+    php-zts-dom \
+    php-zts-mbstring \
+    php-zts-xml \
+    php-zts-intl \
+    php-zts-xmlwriter \
+    php-zts-xmlreader \
+    php-zts-simplexml \
+    php-zts-tokenizer \
+    php-zts-pcntl \
+    php-zts-pdo \
+    php-zts-pdo_mysql \
+    php-zts-pdo_sqlite \
+    php-zts-phar \
+    php-zts-zip \
+    php-zts-openssl \
+    php-zts-gd \
+    php-zts-iconv \
+    php-zts-session \
+    php-zts-zlib \
+    php-zts-exif \
+    php-zts-ftp \
+    php-zts-bcmath \
+    php-zts-sockets \
     mariadb-connector-c \
     nodejs \
     npm \
     docker
 
-RUN ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php
+RUN php --version
 
 # Remove default server definition from Nginx to avoid conflicts
 RUN rm /etc/nginx/http.d/default.conf
@@ -63,10 +61,10 @@ RUN rm /etc/nginx/http.d/default.conf
 COPY nginx.conf /etc/nginx/http.d/default.conf
 
 # Configure PHP-FPM to run as the same user as Nginx
-RUN sed -i 's/user = nobody/user = nginx/g' /etc/php${PHP_VERSION}/php-fpm.d/www.conf \
-    && sed -i 's/group = nobody/group = nginx/g' /etc/php${PHP_VERSION}/php-fpm.d/www.conf \
-    && sed -i 's/;listen.owner = nobody/listen.owner = nginx/g' /etc/php${PHP_VERSION}/php-fpm.d/www.conf \
-    && sed -i 's/;listen.group = nobody/listen.group = nginx/g' /etc/php${PHP_VERSION}/php-fpm.d/www.conf
+RUN sed -i 's/user = nobody/user = nginx/g' /etc/php-zts/fpm.d/www.conf \
+    && sed -i 's/group = nobody/group = nginx/g' /etc/php-zts/fpm.d/www.conf \
+    && sed -i 's/;listen.owner = nobody/listen.owner = nginx/g' /etc/php-zts/fpm.d/www.conf \
+    && sed -i 's/;listen.group = nobody/listen.group = nginx/g' /etc/php-zts/fpm.d/www.conf
 
 # Create directory for Nginx
 RUN mkdir -p /run/nginx
