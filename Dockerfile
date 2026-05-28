@@ -16,7 +16,6 @@ RUN apk add --no-cache \
     php${PHP_VERSION}-fileinfo \
     php${PHP_VERSION}-mysqli \
     php${PHP_VERSION}-json \
-    php${PHP_VERSION}-opcache \
     php${PHP_VERSION}-ctype \
     php${PHP_VERSION}-curl \
     php${PHP_VERSION}-dom \
