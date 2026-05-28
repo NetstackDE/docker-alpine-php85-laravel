@@ -5,7 +5,7 @@ LABEL maintainer="Netstack GmbH <info@netstack.de>"
 # Set environment variables
 ENV PHP_VERSION=85
 
-RUN echo "https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/main/php-zts" | sudo tee -a /etc/apk/repositories
+RUN echo "https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/main/php-zts" | tee -a /etc/apk/repositories
 RUN KEYFILE=$(curl -sJOw '%{filename_effective}' https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/key)
 RUN mv ${KEYFILE} /etc/apk/keys/
 RUN apk update
