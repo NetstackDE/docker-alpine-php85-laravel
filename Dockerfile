@@ -5,12 +5,18 @@ LABEL maintainer="Netstack GmbH <info@netstack.de>"
 # Set environment variables
 ENV PHP_VERSION=85
 
+RUN echo "https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/main/php-zts" | sudo tee -a /etc/apk/repositories
+RUN KEYFILE=$(curl -sJOw '%{filename_effective}' https://pkg.henderkes.com/api/packages/${PHP_VERSION}/alpine/key)
+RUN mv ${KEYFILE} /etc/apk/keys/
+RUN apk update
+
 # Install dependencies and PHP 8.2 with Nginx and Docker for docker in docker builds 
 RUN apk add --no-cache \
     nginx \
     bash \
     curl \
     git \
+    frankenphp \
     php${PHP_VERSION} \
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-fileinfo \
@@ -47,9 +53,6 @@ RUN apk add --no-cache \
     docker
 
 RUN ln -s /usr/bin/php${PHP_VERSION} /usr/bin/php
-
-# Install Frankenphp binary
-RUN curl https://frankenphp.dev/install.sh | sh
 
 # Remove default server definition from Nginx to avoid conflicts
 RUN rm /etc/nginx/http.d/default.conf
